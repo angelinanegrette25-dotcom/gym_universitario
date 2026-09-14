@@ -197,6 +197,12 @@ class Gym:
             resultado += f"- {nombre} ({doc}): {promedio:.1f} minutos en promedio\n"
 
         return resultado
+
+    def prioridad_membresia(self, documento: str, horario: str, fecha: str) -> str:
+# Da prioridad exclusiva a un usuario para reservar un horario, si es "habitual" ahí
+# (ha ido varias veces a esa misma hora) o si tiene más tiempo acumulado en el gimnasio
+# que los demás usuarios. La prioridad se guarda en self.prioridades (una lista simple
+# que se crea aquí mismo, sin tocar el __init__ original).
         
 # Ejecuta ejemplos del sistema cuando el archivo se ejecuta directamente.
 if __name__ == "__main__":
