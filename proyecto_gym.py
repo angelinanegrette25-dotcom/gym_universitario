@@ -97,7 +97,7 @@ class Gym:
         nueva_reserva = Reserva(documento, nombre_usuario, horario_deseado, fecha)
         self.reservas.append(nueva_reserva)
         
-        return f"¡Reserva exitosa! {nombre_usuario} tiene su espacio a las {horario_deseado}. el tiempo para estar haciendo uso del gym es: {self.tiempo_maximo}."
+        return f"¡Reserva exitosa! {nombre_usuario} \nTiene su espacio a las {horario_deseado}. \nEl tiempo para estar haciendo uso del gym es: {self.tiempo_maximo}."
     
     def registrar_visita(self, documento: str, horario: str,  duracion: int, equipos: list[str]) -> str:
 # Registra una visita indicando horario, duración y equipos utilizados.
