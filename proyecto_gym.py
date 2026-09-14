@@ -91,8 +91,8 @@ class Gym:
         if horario_deseado not in self.horarios_disponibles:
             agenda_formateada = " | ".join(self.horarios_disponibles)
             return (f"El horario '{horario_deseado}' no existe.\n"
-                    f"Horarios disponibles: {agenda_formateada}\n"
-                    f"Tiempo máximo permitido por sesión: {self.tiempo_maximo}.")
+                    -f"Horarios disponibles: {agenda_formateada}\n"
+                    -f"Tiempo máximo permitido por sesión: {self.tiempo_maximo}.")
             
         nueva_reserva = Reserva(documento, nombre_usuario, horario_deseado, fecha)
         self.reservas.append(nueva_reserva)
