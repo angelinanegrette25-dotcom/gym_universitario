@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 
 @dataclass
 class Usuario:
@@ -163,6 +164,12 @@ class Gym:
                 programa_frecuente = programa
         
         return f"La carrera más frecuente es {programa_frecuente}."
+
+    def promedio_duracion_por_usuario(self) -> str:
+# Calcula, para cada usuario que tiene visitas registradas, el promedio de duración.
+        if not self.registros:
+            return "No hay visitas registradas."
+
         
 # Ejecuta ejemplos del sistema cuando el archivo se ejecuta directamente.
 if __name__ == "__main__":
