@@ -170,6 +170,33 @@ class Gym:
         if not self.registros:
             return "No hay visitas registradas."
 
+        suma_por_usuario = {}
+        cantidad_por_usuario = {}
+
+        for registro in self.registros:
+            doc = registro["documento"]
+            duracion = registro["duracion"]
+
+            if doc not in suma_por_usuario:
+                suma_por_usuario[doc] = 0
+                cantidad_por_usuario[doc] = 0
+
+            suma_por_usuario[doc] += duracion
+            cantidad_por_usuario[doc] += 1
+
+        resultado = "Promedio de duración por usuario:\n"
+        for doc in suma_por_usuario:
+            promedio = suma_por_usuario[doc] / cantidad_por_usuario[doc]
+
+            nombre = doc
+            for u in self.usuarios:
+                if u.documento == doc:
+                    nombre = u.nombre
+                    break
+
+            resultado += f"- {nombre} ({doc}): {promedio:.1f} minutos en promedio\n"
+
+        return resultado
         
 # Ejecuta ejemplos del sistema cuando el archivo se ejecuta directamente.
 if __name__ == "__main__":
