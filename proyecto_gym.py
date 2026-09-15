@@ -50,6 +50,7 @@ class Gym:
         self.tiempo_maximo = tiempo_maximo
         self.reservas: list[Reserva] = []
         self.registros: list[dict] = []
+        self.prioridades: list[dict] = []
 
     def registrar_usuario(self, nombre: str, documento: str, programa: str) -> str:
 # Registra un nuevo usuario verificando que su documento no esté repetido.
@@ -201,11 +202,7 @@ class Gym:
     def prioridad_membresia(self, documento: str, horario: str, fecha: str) -> str:
 # Da prioridad exclusiva a un usuario para reservar un horario, si es "habitual" ahí
 # (ha ido varias veces a esa misma hora) o si tiene más tiempo acumulado en el gimnasio
-# que los demás usuarios. La prioridad se guarda en self.prioridades (una lista simple
-# que se crea aquí mismo, sin tocar el __init__ original).
-        if not hasattr(self, "prioridades"):
-            self.prioridades = []  # cada elemento: {documento, nombre, horario, fecha, confirmada}
-
+# que los demás usuarios.
         usuario = None
         for u in self.usuarios:
             if u.documento == documento:
@@ -260,9 +257,8 @@ class Gym:
     def confirmar_prioridad(self, documento: str, horario: str, fecha: str, hora_actual: datetime) -> str:
 # Confirma (o libera) una prioridad. Si se confirma antes del límite de 2 horas antes
 # del horario, el cupo queda exclusivo. Si ya pasó ese límite, el cupo se libera solo.
-        if not hasattr(self, "prioridades") or not self.prioridades:
+        if not self.prioridades:
             return "No hay prioridades registradas."
-
         hora_del_horario = datetime.strptime(f"{fecha} {horario}", "%Y-%m-%d %I:%M %p")
         limite_para_confirmar = hora_del_horario - timedelta(hours=2)
 
@@ -280,8 +276,6 @@ class Gym:
     def horario_disponible_para_reservar(self, horario: str, fecha: str, documento: str) -> bool:
 # consultar, ANTES de llamar a realizar_reserva, si el horario
 # está libre o si está apartado/confirmado por otro usuario con prioridad.
-        if not hasattr(self, "prioridades"):
-            return True
         for p in self.prioridades:
             if p["horario"] == horario and p["fecha"] == fecha and p["documento"] != documento:
                 return False
